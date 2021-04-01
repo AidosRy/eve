@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.Arrays;
 
 @ControllerAdvice
 @Slf4j
@@ -38,7 +39,11 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     private ApiError errorMessage(HttpStatus status, Exception ex, WebRequest request) {
-        final String message = ex.getMessage() == null ? ex.getClass().getName() : ex.getMessage();
+        final String message = ex.getMessage() == null || ex.getMessage().isEmpty() ? Params.somethingWrong : ex.getMessage();
+        if (message.equals(Params.somethingWrong))
+            log.error(Arrays.toString(ex.getStackTrace()));
+        else
+            log.error(message);
         return ApiError.builder()
                 .timeStamp(Timestamp.from(Instant.now()))
                 .status(status.value())
