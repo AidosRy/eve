@@ -1,4 +1,4 @@
-# spring-security-jwt
+# Eve - the event app
 
 Features:
 
