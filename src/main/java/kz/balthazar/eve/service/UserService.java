@@ -4,10 +4,14 @@ import kz.balthazar.eve.entity.model.Role;
 import kz.balthazar.eve.entity.model.User;
 import kz.balthazar.eve.repository.RoleRepo;
 import kz.balthazar.eve.repository.UserRepo;
+import kz.balthazar.eve.util.Params;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 @Service
@@ -19,6 +23,8 @@ public class UserService {
     RoleRepo roleRepo;
     @Autowired
     PasswordEncoder passwordEncoder;
+    @Autowired
+    private LoginAttemptService loginAttemptService;
 
     public User saveUser(User user) {
         Role userRole = roleRepo.findByName("ROLE_USER");
@@ -39,13 +45,29 @@ public class UserService {
     }
 
     public User findByLoginAndPassword(String login, String password) {
+        String ip = getClientIP();
+        if (loginAttemptService.isBlocked(ip))
+            throw new RuntimeException(Params.ipBlocked);
         User user = findByLogin(login);
         if (user != null) {
             if (passwordEncoder.matches(password, user.getPassword())) {
+                loginAttemptService.loginSucceeded(ip);
                 return user;
             }
         }
+        loginAttemptService.loginFailed(ip);
         return null;
+    }
+
+    private String getClientIP() {
+        HttpServletRequest request =
+                ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
+                        .getRequest();
+        String xfHeader = request.getHeader("X-Forwarded-For");
+        if (xfHeader == null){
+            return request.getRemoteAddr();
+        }
+        return xfHeader.split(",")[0];
     }
 
 }

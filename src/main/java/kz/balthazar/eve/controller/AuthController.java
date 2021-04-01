@@ -8,8 +8,10 @@ import kz.balthazar.eve.security.jwt.JwtProvider;
 import kz.balthazar.eve.entity.model.User;
 import kz.balthazar.eve.service.EmailSenderService;
 import kz.balthazar.eve.service.UserService;
+import kz.balthazar.eve.util.Params;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -108,7 +110,7 @@ public class AuthController {
     @PostMapping("/login")
     public String auth(@RequestBody AuthRequest request) {
         User user = userService.findByLoginAndPassword(request.getLogin(), request.getPassword());
-        if (user == null) throw new RuntimeException("Invalid credentials");
+        if (user == null) throw new BadCredentialsException(Params.indalid);
         return jwtProvider.generateToken(user.getLogin());
     }
 }

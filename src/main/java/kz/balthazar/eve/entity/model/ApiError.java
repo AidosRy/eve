@@ -1,15 +1,16 @@
 package kz.balthazar.eve.entity.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+
+import java.sql.Timestamp;
 
 @Builder
 @Getter
 public class ApiError {
-    private Long timeStamp;
+    private Timestamp timeStamp;
     private int status;
+    private String error;
     private String message;
-    private String developerMessage;
     private String path;
 }

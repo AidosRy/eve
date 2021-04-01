@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import javax.annotation.PostConstruct;
 
 @SpringBootApplication
-public class App {
+public class Eve {
 
     @Autowired
     UserRepo userRepo;
@@ -24,7 +24,7 @@ public class App {
     PasswordEncoder passwordEncoder;
 
     public static void main(String[] args) {
-        SpringApplication.run(App.class, args);
+        SpringApplication.run(Eve.class, args);
     }
 
     @PostConstruct
@@ -48,7 +48,7 @@ public class App {
         for(int i=0; i<3; i++) {
             user = new User();
             user.setFirstName(s+=s);
-            user.setEmail("qaidosp@gmail.com");
+            user.setEmail("qaidosp@gmail.com"+s);
             user.setPassword(passwordEncoder.encode("asdasd"));
             user.setEnabled(true);
             user.setRole(adminRole);
