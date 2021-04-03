@@ -35,7 +35,7 @@ PEN test and Snyk scan
  
 Add unusual login location prevention
 
-##Functional:
+## Functional:
 
 Remove logic from controllers
 
