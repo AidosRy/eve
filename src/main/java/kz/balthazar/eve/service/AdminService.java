@@ -1,6 +1,6 @@
 package kz.balthazar.eve.service;
 
-import kz.balthazar.eve.entity.model.User;
+import kz.balthazar.eve.model.entity.User;
 import kz.balthazar.eve.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

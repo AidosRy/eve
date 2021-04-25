@@ -1,7 +1,7 @@
 package kz.balthazar.eve.service;
 
-import kz.balthazar.eve.entity.model.Role;
-import kz.balthazar.eve.entity.model.User;
+import kz.balthazar.eve.model.entity.Role;
+import kz.balthazar.eve.model.entity.User;
 import kz.balthazar.eve.repository.RoleRepo;
 import kz.balthazar.eve.repository.UserRepo;
 import kz.balthazar.eve.security.BruteForceService;

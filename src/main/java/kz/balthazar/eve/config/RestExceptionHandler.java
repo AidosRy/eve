@@ -1,6 +1,6 @@
 package kz.balthazar.eve.config;
 
-import kz.balthazar.eve.entity.model.ApiError;
+import kz.balthazar.eve.model.dto.ApiError;
 import kz.balthazar.eve.util.Errors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

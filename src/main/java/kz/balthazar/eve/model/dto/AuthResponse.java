@@ -1,4 +1,4 @@
-package kz.balthazar.eve.entity.dto;
+package kz.balthazar.eve.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

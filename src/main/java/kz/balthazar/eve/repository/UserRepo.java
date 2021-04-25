@@ -1,6 +1,6 @@
 package kz.balthazar.eve.repository;
 
-import kz.balthazar.eve.entity.model.User;
+import kz.balthazar.eve.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package kz.balthazar.eve.entity.model;
+package kz.balthazar.eve.model.entity;
 
 import lombok.Data;
 
@@ -26,10 +26,12 @@ public class Event extends BaseEntity{
     @Lob
     byte[] thumbnail;
 
-    double rating;
+    Double rating;
+
+    Integer views;
 
     @ManyToMany
-    Set<Category> categories;
+    List<Category> categories = new ArrayList<>();
 
     public void addAttendee(User user) {
         attendees.add(user);

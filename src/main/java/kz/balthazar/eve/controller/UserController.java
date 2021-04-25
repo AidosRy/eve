@@ -1,6 +1,6 @@
 package kz.balthazar.eve.controller;
 
-import kz.balthazar.eve.entity.model.User;
+import kz.balthazar.eve.model.entity.User;
 import kz.balthazar.eve.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

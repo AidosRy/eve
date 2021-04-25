@@ -1,7 +1,9 @@
 package kz.balthazar.eve;
 
-import kz.balthazar.eve.entity.model.Role;
-import kz.balthazar.eve.entity.model.User;
+import kz.balthazar.eve.model.entity.Event;
+import kz.balthazar.eve.model.entity.Role;
+import kz.balthazar.eve.model.entity.User;
+import kz.balthazar.eve.repository.EventRepo;
 import kz.balthazar.eve.repository.RoleRepo;
 import kz.balthazar.eve.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ public class Eve {
 
     @Autowired
     RoleRepo roleRepo;
+
+    @Autowired
+    EventRepo eventRepo;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -54,6 +59,12 @@ public class Eve {
             user.setRole(adminRole);
             user.setLogin(s);
             userRepo.save(user);
+        }
+
+        for(int i=0; i<13; i++) {
+            Event event = new Event();
+            event.setRating((double) i);
+            eventRepo.save(event);
         }
     }
 }

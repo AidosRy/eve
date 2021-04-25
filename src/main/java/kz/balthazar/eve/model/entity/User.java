@@ -1,4 +1,4 @@
-package kz.balthazar.eve.entity.model;
+package kz.balthazar.eve.model.entity;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
-@Table(name = "user_table")
+@Table(name = "users")
 @RequiredArgsConstructor
 @Data
 public class User extends BaseEntity{

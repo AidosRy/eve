@@ -1,16 +1,16 @@
 package kz.balthazar.eve.controller;
 
-import kz.balthazar.eve.entity.model.Event;
-import kz.balthazar.eve.entity.model.User;
+import kz.balthazar.eve.model.entity.Event;
 import kz.balthazar.eve.repository.EventRepo;
 import kz.balthazar.eve.repository.UserRepo;
 import kz.balthazar.eve.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/event")
@@ -25,10 +25,11 @@ public class EventUserController {
     @Autowired
     UserRepo userRepo;
 
-    @PostMapping
+    @PostMapping("/attend")
     public ResponseEntity<String> attendEvent(@PathVariable Long eventId, Long userId) {
-        Optional<Event> event = eventRepo.findById(eventId);
-        event.ifPresent(value -> value.addAttendee(userRepo.findById(userId).get()));
+        Event event = eventRepo.getOne(eventId);
+        event.addAttendee(userRepo.getOne(userId));
+        eventRepo.save(event);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -37,16 +38,19 @@ public class EventUserController {
         return eventRepo.findById(eventId).get();
     }
 
-    @DeleteMapping
+    @DeleteMapping("/unattend")
     public ResponseEntity<String> unAttendEvent(@PathVariable Long eventId, Long userId) {
-        Optional<Event> event = eventRepo.findById(eventId);
-        event.ifPresent(value -> value.deleteAttendee(userRepo.findById(userId).get()));
+        Event event = eventRepo.getOne(eventId);
+        event.deleteAttendee(userRepo.getOne(userId));
+        eventRepo.save(event);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-//    @GetMapping("/popular")
-//    public String getPopular() {
-//
-//    }
+    @GetMapping("/popular")
+    public List<Event> getPopular() {
+        List<Event> list = eventRepo.findPopular(PageRequest.of(0, 10));
+        list.sort(Comparator.comparing(Event::getRating).reversed());
+        return list;
+    }
 
 }

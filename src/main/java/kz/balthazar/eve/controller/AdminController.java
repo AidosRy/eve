@@ -1,11 +1,8 @@
 package kz.balthazar.eve.controller;
 
-import kz.balthazar.eve.entity.model.User;
 import kz.balthazar.eve.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/admin")

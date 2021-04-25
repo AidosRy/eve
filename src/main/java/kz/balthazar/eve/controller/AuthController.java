@@ -1,11 +1,11 @@
 package kz.balthazar.eve.controller;
 
-import kz.balthazar.eve.entity.dto.AuthRequest;
-import kz.balthazar.eve.entity.model.ConfirmationToken;
+import kz.balthazar.eve.model.dto.AuthRequest;
+import kz.balthazar.eve.model.entity.ConfirmationToken;
 import kz.balthazar.eve.repository.ConfirmationTokenRepo;
 import kz.balthazar.eve.repository.UserRepo;
 import kz.balthazar.eve.security.jwt.JwtProvider;
-import kz.balthazar.eve.entity.model.User;
+import kz.balthazar.eve.model.entity.User;
 import kz.balthazar.eve.service.EmailSenderService;
 import kz.balthazar.eve.service.UserService;
 import kz.balthazar.eve.util.Errors;
