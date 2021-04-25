@@ -1,4 +1,4 @@
-package kz.balthazar.eve.service;
+package kz.balthazar.eve.security;
 
 import org.springframework.stereotype.Service;
 
@@ -6,12 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class LoginAttemptService {
+public class BruteForceService {
 
     private final int MAX_ATTEMPT = 10;
     private Map<String, Integer> ipsAndAttempts;
 
-    public LoginAttemptService() {
+    public BruteForceService() {
         ipsAndAttempts = new HashMap<>();
     }
 

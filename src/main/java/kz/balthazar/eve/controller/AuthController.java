@@ -4,38 +4,39 @@ import kz.balthazar.eve.entity.dto.AuthRequest;
 import kz.balthazar.eve.entity.model.ConfirmationToken;
 import kz.balthazar.eve.repository.ConfirmationTokenRepo;
 import kz.balthazar.eve.repository.UserRepo;
+import kz.balthazar.eve.security.jwt.JwtFilter;
 import kz.balthazar.eve.security.jwt.JwtProvider;
 import kz.balthazar.eve.entity.model.User;
 import kz.balthazar.eve.service.EmailSenderService;
 import kz.balthazar.eve.service.UserService;
 import kz.balthazar.eve.util.Params;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class AuthController {
 
-    @Autowired
     UserService userService;
 
-    @Autowired
     JwtProvider jwtProvider;
 
-    @Autowired
-    ConfirmationTokenRepo tokenRepo;
+    ConfirmationTokenRepo confirmTokenRepo;
 
-    @Autowired
     EmailSenderService emailSenderService;
 
-    @Autowired
     UserRepo userRepo;
 
-    @Autowired
     PasswordEncoder passwordEncoder;
 
     @PostMapping("/registration")
@@ -46,7 +47,7 @@ public class AuthController {
         userService.saveUser(user);
         ConfirmationToken confirmationToken = new ConfirmationToken(user);
 
-        tokenRepo.save(confirmationToken);
+        confirmTokenRepo.save(confirmationToken);
 
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(user.getEmail());
@@ -66,7 +67,7 @@ public class AuthController {
                 return "User doesn't exist!";
             } else {
                 ConfirmationToken confirmationToken = new ConfirmationToken(user);
-                tokenRepo.save(confirmationToken);
+                confirmTokenRepo.save(confirmationToken);
                 SimpleMailMessage mailMessage = new SimpleMailMessage();
                 mailMessage.setTo(email);
                 mailMessage.setSubject("Change password link");
@@ -78,7 +79,7 @@ public class AuthController {
             }
         }
         else if (token != null && password != null) {
-            ConfirmationToken tokenn = tokenRepo.findByConfirmationToken(token);
+            ConfirmationToken tokenn = confirmTokenRepo.findByConfirmationToken(token);
             User user = userRepo.findByEmailIgnoreCase(tokenn.getUser().getEmail());
             user.setPassword(passwordEncoder.encode(password));
             userRepo.save(user);
@@ -90,7 +91,7 @@ public class AuthController {
     @PostMapping(value="/confirm-account")
     public String confirmUserAccount(@RequestParam String token)
     {
-        ConfirmationToken tokenn = tokenRepo.findByConfirmationToken(token);
+        ConfirmationToken tokenn = confirmTokenRepo.findByConfirmationToken(token);
         String response;
         if(tokenn != null)
         {

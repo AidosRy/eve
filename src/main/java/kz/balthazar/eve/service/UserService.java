@@ -4,6 +4,7 @@ import kz.balthazar.eve.entity.model.Role;
 import kz.balthazar.eve.entity.model.User;
 import kz.balthazar.eve.repository.RoleRepo;
 import kz.balthazar.eve.repository.UserRepo;
+import kz.balthazar.eve.security.BruteForceService;
 import kz.balthazar.eve.util.Params;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,7 +25,7 @@ public class UserService {
     @Autowired
     PasswordEncoder passwordEncoder;
     @Autowired
-    private LoginAttemptService loginAttemptService;
+    private BruteForceService bruteForceService;
 
     public User saveUser(User user) {
         Role userRole = roleRepo.findByName("ROLE_USER");
@@ -46,16 +47,16 @@ public class UserService {
 
     public User findByLoginAndPassword(String login, String password) {
         String ip = getClientIP();
-        if (loginAttemptService.isBlocked(ip))
+        if (bruteForceService.isBlocked(ip))
             throw new RuntimeException(Params.ipBlocked);
         User user = findByLogin(login);
         if (user != null) {
             if (passwordEncoder.matches(password, user.getPassword())) {
-                loginAttemptService.loginSucceeded(ip);
+                bruteForceService.loginSucceeded(ip);
                 return user;
             }
         }
-        loginAttemptService.loginFailed(ip);
+        bruteForceService.loginFailed(ip);
         return null;
     }
 
