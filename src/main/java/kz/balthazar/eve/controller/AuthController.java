@@ -8,7 +8,7 @@ import kz.balthazar.eve.security.jwt.JwtProvider;
 import kz.balthazar.eve.entity.model.User;
 import kz.balthazar.eve.service.EmailSenderService;
 import kz.balthazar.eve.service.UserService;
-import kz.balthazar.eve.util.Params;
+import kz.balthazar.eve.util.Errors;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -109,7 +109,7 @@ public class AuthController {
     @PostMapping("/login")
     public String auth(@RequestBody AuthRequest request) {
         User user = userService.findByLoginAndPassword(request.getLogin(), request.getPassword());
-        if (user == null) throw new BadCredentialsException(Params.invalidCreds);
+        if (user == null) throw new BadCredentialsException(Errors.invalidCreds);
         return jwtProvider.generateToken(user.getLogin());
     }
 }

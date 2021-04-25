@@ -8,7 +8,7 @@ import java.util.Map;
 @Service
 public class BruteForceService {
 
-    private final int MAX_ATTEMPT = 10;
+    private final int MAX_ATTEMPT = 100;
     private Map<String, Integer> ipsAndAttempts;
 
     public BruteForceService() {

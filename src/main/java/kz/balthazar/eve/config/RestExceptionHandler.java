@@ -1,7 +1,7 @@
 package kz.balthazar.eve.config;
 
 import kz.balthazar.eve.entity.model.ApiError;
-import kz.balthazar.eve.util.Params;
+import kz.balthazar.eve.util.Errors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,15 +32,15 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleExceptions(Exception e, WebRequest request) {
 
         HttpStatus status = switch (e.getMessage()){
-            case Params.invalidCreds -> HttpStatus.BAD_REQUEST;
+            case Errors.invalidCreds -> HttpStatus.BAD_REQUEST;
             default -> HttpStatus.INTERNAL_SERVER_ERROR;
         };
         return new ResponseEntity<>(errorMessage(status, e, request), status);
     }
 
     private ApiError errorMessage(HttpStatus status, Exception ex, WebRequest request) {
-        final String message = ex.getMessage() == null || ex.getMessage().isEmpty() ? Params.somethingWrong : ex.getMessage();
-        if (message.equals(Params.somethingWrong))
+        final String message = ex.getMessage() == null || ex.getMessage().isEmpty() ? Errors.somethingWrong : ex.getMessage();
+        if (message.equals(Errors.somethingWrong))
             log.error(Arrays.toString(ex.getStackTrace()));
         else
             log.error(message);

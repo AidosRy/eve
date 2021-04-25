@@ -1,6 +1,7 @@
 package kz.balthazar.eve.entity.model;
 
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -8,6 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "user_table")
+@RequiredArgsConstructor
 @Data
 public class User extends BaseEntity{
 
@@ -39,7 +41,7 @@ public class User extends BaseEntity{
     @JoinColumn(name = "role_id")
     Role role;
 
-    @OneToMany
+    @ManyToMany
     List<Event> attendedEvents;
 
     @OneToMany

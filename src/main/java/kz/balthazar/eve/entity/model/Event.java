@@ -1,10 +1,14 @@
 package kz.balthazar.eve.entity.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 @Entity
+@Data
 public class Event extends BaseEntity{
 
     String name;
@@ -14,10 +18,10 @@ public class Event extends BaseEntity{
     String longDescription;
 
     @ManyToMany
-    Set<User> attendees;
+    List<User> attendees = new ArrayList<>();
 
     @ManyToMany
-    Set<Tag> tags;
+    List<Tag> tags = new ArrayList<>();
 
     @Lob
     byte[] thumbnail;
@@ -27,5 +31,11 @@ public class Event extends BaseEntity{
     @ManyToMany
     Set<Category> categories;
 
+    public void addAttendee(User user) {
+        attendees.add(user);
+    }
 
+    public void deleteAttendee(User user) {
+        attendees.remove(user);
+    }
 }

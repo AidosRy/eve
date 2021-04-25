@@ -5,7 +5,7 @@ import kz.balthazar.eve.entity.model.User;
 import kz.balthazar.eve.repository.RoleRepo;
 import kz.balthazar.eve.repository.UserRepo;
 import kz.balthazar.eve.security.BruteForceService;
-import kz.balthazar.eve.util.Params;
+import kz.balthazar.eve.util.Errors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -48,7 +48,7 @@ public class UserService {
     public User findByLoginAndPassword(String login, String password) {
         String ip = getClientIP();
         if (bruteForceService.isBlocked(ip))
-            throw new RuntimeException(Params.ipBlocked);
+            throw new RuntimeException(Errors.ipBlocked);
         User user = findByLogin(login);
         if (user != null) {
             if (passwordEncoder.matches(password, user.getPassword())) {
