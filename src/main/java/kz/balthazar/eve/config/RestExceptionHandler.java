@@ -32,7 +32,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleExceptions(Exception e, WebRequest request) {
 
         HttpStatus status = switch (e.getMessage()){
-            case Params.indalid -> HttpStatus.BAD_REQUEST;
+            case Params.invalidCreds -> HttpStatus.BAD_REQUEST;
             default -> HttpStatus.INTERNAL_SERVER_ERROR;
         };
         return new ResponseEntity<>(errorMessage(status, e, request), status);

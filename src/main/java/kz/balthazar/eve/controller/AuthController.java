@@ -4,7 +4,6 @@ import kz.balthazar.eve.entity.dto.AuthRequest;
 import kz.balthazar.eve.entity.model.ConfirmationToken;
 import kz.balthazar.eve.repository.ConfirmationTokenRepo;
 import kz.balthazar.eve.repository.UserRepo;
-import kz.balthazar.eve.security.jwt.JwtFilter;
 import kz.balthazar.eve.security.jwt.JwtProvider;
 import kz.balthazar.eve.entity.model.User;
 import kz.balthazar.eve.service.EmailSenderService;
@@ -19,7 +18,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
@@ -111,7 +109,7 @@ public class AuthController {
     @PostMapping("/login")
     public String auth(@RequestBody AuthRequest request) {
         User user = userService.findByLoginAndPassword(request.getLogin(), request.getPassword());
-        if (user == null) throw new BadCredentialsException(Params.indalid);
+        if (user == null) throw new BadCredentialsException(Params.invalidCreds);
         return jwtProvider.generateToken(user.getLogin());
     }
 }
