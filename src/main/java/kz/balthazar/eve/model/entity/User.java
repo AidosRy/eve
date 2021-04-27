@@ -46,4 +46,8 @@ public class User extends BaseEntity{
 
     @OneToMany
     List<Event> likedEvents;
+
+    public User(String login) {
+        this.login = login;
+    }
 }

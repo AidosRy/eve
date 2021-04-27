@@ -1,6 +1,6 @@
 package kz.balthazar.eve.controller;
 
-import kz.balthazar.eve.model.dto.AuthRequest;
+import kz.balthazar.eve.model.AuthRequest;
 import kz.balthazar.eve.model.entity.ConfirmationToken;
 import kz.balthazar.eve.repository.ConfirmationTokenRepo;
 import kz.balthazar.eve.repository.UserRepo;
