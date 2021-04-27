@@ -5,11 +5,11 @@ import kz.balthazar.eve.repository.EventRepo;
 import kz.balthazar.eve.repository.UserRepo;
 import kz.balthazar.eve.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
 import java.util.*;
 
 @RestController
@@ -24,6 +24,9 @@ public class EventUserController {
 
     @Autowired
     UserRepo userRepo;
+
+    @Autowired
+    EntityManager entityManager;
 
     @PostMapping("/attend")
     public ResponseEntity<String> attendEvent(@PathVariable Long eventId, Long userId) {
@@ -47,10 +50,9 @@ public class EventUserController {
     }
 
     @GetMapping("/popular")
-    public List<Event> getPopular() {
-        List<Event> list = eventRepo.findPopular(PageRequest.of(0, 10));
-        list.sort(Comparator.comparing(Event::getRating).reversed());
-        return list;
+    public List getPopular(@RequestParam String sort, @RequestParam String order) {
+        String sql = "SELECT e FROM Event e ORDER BY e." + sort + " " + order;
+        return entityManager.createQuery(sql).getResultList();
     }
 
 }

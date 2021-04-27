@@ -3,6 +3,7 @@ package kz.balthazar.eve.model.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -29,6 +30,10 @@ public class Event extends BaseEntity{
     Double rating;
 
     Integer views;
+
+    OffsetDateTime date;
+
+    Integer price;
 
     @ManyToMany
     List<Category> categories = new ArrayList<>();
