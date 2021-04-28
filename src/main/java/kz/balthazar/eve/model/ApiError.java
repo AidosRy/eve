@@ -8,9 +8,9 @@ import java.sql.Timestamp;
 @Builder
 @Getter
 public class ApiError {
-    private Timestamp timeStamp;
-    private int status;
-    private String error;
-    private String message;
-    private String path;
+    private final Timestamp timeStamp;
+    private final int status;
+    private final String error;
+    private final String message;
+    private final String path;
 }

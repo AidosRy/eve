@@ -1,24 +1,32 @@
-//package kz.balthazar.eve.model.dto;
-//
-//import kz.balthazar.eve.model.entity.Category;
-//import kz.balthazar.eve.model.entity.Tag;
-//
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//public class EventDto {
-//
-//    String name;
-//
-//    String shortDescription;
-//
-//    String longDescription;
-//
-//    Double rating;
-//
-//    Integer views;
-//
-//    List<Tag> tags = new ArrayList<>();
-//
-//    List<Category> categories = new ArrayList<>();
-//}
+package kz.balthazar.eve.model.dto;
+
+import lombok.Builder;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Builder
+public class EventDto {
+
+    String title;
+
+    String shortDescription;
+
+    String longDescription;
+
+    Double rating;
+
+    Integer views;
+
+    LocalDateTime date;
+
+    String location;
+
+    Integer price;
+
+    Integer authorId;
+
+    List<String> tags;
+
+    List<String> categories;
+}

@@ -38,7 +38,12 @@ public class Event extends BaseEntity{
 
     LocalDateTime date;
 
+    String location;
+
     Integer price;
+
+    @ManyToOne
+    User author;
 
     @ManyToMany
     List<Category> categories = new ArrayList<>();

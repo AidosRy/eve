@@ -58,12 +58,14 @@ public class Eve {
         user.setPassword(passwordEncoder.encode("asdasd"));
         user.setEnabled(true);
         user.setRole(adminRole);
+
         user.setLogin("asdasd");
         userRepo.save(user);
         String s = "s";
         for(int i=0; i<3; i++) {
             user = new User();
-            user.setFirstName(s+=s);
+            user.setFirstName("Zhenya");
+            user.setLastName("Bazhenov");
             user.setEmail("qaidosp@gmail.com"+s);
             user.setPassword(passwordEncoder.encode("asdasd"));
             user.setEnabled(true);
@@ -72,7 +74,7 @@ public class Eve {
             userRepo.save(user);
         }
 
-        for(int i=0; i<13; i++) {
+        for(int i=0; i<2; i++) {
             double descriptionSize = Math.random()*418;
             StringBuilder longDesc = new StringBuilder();
             for(int y = 0; y < descriptionSize; y++) {
@@ -89,11 +91,42 @@ public class Eve {
                 shortDesc.append(lorem[y]).append(" ");
             }
             event.setShortDescription(shortDesc.toString());
-            event.setDate(LocalDateTime.now());
+
+            int days = switch (i) {
+                case 0 -> 27;
+                case 1 -> 6;
+                default -> 0;
+            };
+            event.setDate(LocalDateTime.now().plusDays(days));
+            event.setLocation("Almaty");
+            event.setAuthor(user);
             event.setRating(Math.random() * 5);
             event.setViews((int) (Math.random() * 20000));
             eventRepo.save(event);
         }
+
+        double descriptionSize = Math.random()*418;
+        StringBuilder longDesc = new StringBuilder();
+        for(int y = 0; y < descriptionSize; y++) {
+            longDesc.append(lorem[y]).append(" ");
+        }
+
+        Event event = new Event();
+        event.setLongDescription(longDesc.toString());
+        double titleSize = Math.random()*30;
+        event.setTitle(longDesc.substring(0, (int) titleSize));//exception
+        double shortDescriptionSize = Math.random()*30;
+        StringBuilder shortDesc = new StringBuilder();
+        for(int y = 0; y < shortDescriptionSize; y++) {
+            shortDesc.append(lorem[y]).append(" ");
+        }
+        event.setShortDescription(shortDesc.toString());
+        event.setDate(LocalDateTime.now().plusHours(7));
+        event.setLocation("Almaty");
+        event.setAuthor(user);
+        event.setRating(Math.random() * 5);
+        event.setViews((int) (Math.random() * 20000));
+        eventRepo.save(event);
         recommender.start();
 
     }
