@@ -2,6 +2,7 @@ package kz.balthazar.eve.recommender;
 
 import kz.balthazar.eve.model.entity.Event;
 import kz.balthazar.eve.model.entity.User;
+import kz.balthazar.eve.repository.EventRepo;
 import kz.balthazar.eve.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,18 +18,22 @@ public class Recommender {
     @Autowired
     UserRepo userRepo;
 
+    @Autowired
+    EventRepo eventRepo;
+
     private final Map<Event, Map<Event, Double>> difference = new HashMap<>();
     private final Map<Event, Map<Event, Integer>> frequency = new HashMap<>();
     private final Map<User, HashMap<Event, Double>> outputData = new HashMap<>();
 
-    protected  List<Event> events = Arrays.asList(new Event("Party"), new Event("Toy"), new Event("Concert"), new Event("Commencement"), new Event("Hackaton"));
+    protected List<Event> events;
 
-    public void start() {
+    public Map<User, HashMap<Event, Double>> start() {
+        events = eventRepo.findAll();
         Map<User, HashMap<Event, Double>> inputData = initializeData();
-        System.out.println("Initial Data\n");
+//        System.out.println("Initial Data\n");
         buildDifferencesMatrix(inputData);
-        System.out.println("\nSlope One predictions\n");
-        predict(inputData);
+//        System.out.println("\nSlope One predictions\n");
+        return predict(inputData);
     }
 
     public Map<User, HashMap<Event, Double>> initializeData() {
@@ -50,7 +55,7 @@ public class Recommender {
         return data;
     }
 
-    private  void buildDifferencesMatrix(Map<User, HashMap<Event, Double>> data) {
+    private void buildDifferencesMatrix(Map<User, HashMap<Event, Double>> data) {
         for (HashMap<Event, Double> user : data.values()) {
             for (Entry<Event, Double> e : user.entrySet()) {
                 if (!difference.containsKey(e.getKey())) {
@@ -79,7 +84,7 @@ public class Recommender {
                 difference.get(j).put(i, oldValue / count);
             }
         }
-        printData(data);
+//        printData(data);
     }
 
     /**
@@ -89,7 +94,7 @@ public class Recommender {
      * @param data
      *            existing user data and their items' ratings
      */
-    private  void predict(Map<User, HashMap<Event, Double>> data) {
+    private Map<User, HashMap<Event, Double>> predict(Map<User, HashMap<Event, Double>> data) {
         HashMap<Event, Double> uPred = new HashMap<>();
         HashMap<Event, Integer> uFreq = new HashMap<>();
         for (Event j : difference.keySet()) {
@@ -104,12 +109,11 @@ public class Recommender {
                         double finalValue = predictedValue * frequency.get(k).get(j);
                         uPred.put(k, uPred.get(k) + finalValue);
                         uFreq.put(k, uFreq.get(k) + frequency.get(k).get(j));
-                    } catch (NullPointerException e1) {
-                        System.out.println(e1.getMessage());
+                    } catch (NullPointerException ignored) {
                     }
                 }
             }
-            HashMap<Event, Double> clean = new HashMap<Event, Double>();
+            HashMap<Event, Double> clean = new HashMap<>();
             for (Event j : uPred.keySet()) {
                 if (uFreq.get(j) > 0) {
                     clean.put(j, uPred.get(j) / uFreq.get(j));
@@ -124,17 +128,18 @@ public class Recommender {
             }
             outputData.put(e.getKey(), clean);
         }
-        printData(outputData);
+//        printData(outputData);
+        return outputData;
     }
 
-    private  void printData(Map<User, HashMap<Event, Double>> data) {
+    private void printData(Map<User, HashMap<Event, Double>> data) {
         for (User user : data.keySet()) {
             System.out.println(user.getLogin() + ":");
             print(data.get(user));
         }
     }
 
-    private  void print(HashMap<Event, Double> hashMap) {
+    private void print(HashMap<Event, Double> hashMap) {
         NumberFormat formatter = new DecimalFormat("#0.000");
         for (Event j : hashMap.keySet()) {
             System.out.println(" " + j.getTitle() + " --> " + formatter.format(hashMap.get(j).doubleValue()));

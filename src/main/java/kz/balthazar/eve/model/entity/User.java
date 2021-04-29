@@ -41,11 +41,11 @@ public class User extends BaseEntity{
     @JoinColumn(name = "role_id")
     Role role;
 
-    @ManyToMany
-    List<Event> attendedEvents;
-
-    @OneToMany
-    List<Event> likedEvents;
+//    @ManyToMany
+//    List<Event> attendedEvents;
+//
+//    @OneToMany
+//    List<Event> likedEvents;
 
     public User(String login) {
         this.login = login;

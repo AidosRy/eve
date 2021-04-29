@@ -15,7 +15,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @SpringBootApplication
 public class Eve {
@@ -62,6 +64,7 @@ public class Eve {
         user.setLogin("asdasd");
         userRepo.save(user);
         String s = "s";
+        List<Event> eventsNames = Arrays.asList(new Event("Party"), new Event("Toy"), new Event("Concert"), new Event("Commencement"), new Event("Hackaton"));
         for(int i=0; i<3; i++) {
             user = new User();
             user.setFirstName("Zhenya");
@@ -70,11 +73,12 @@ public class Eve {
             user.setPassword(passwordEncoder.encode("asdasd"));
             user.setEnabled(true);
             user.setRole(adminRole);
+            s+=s;
             user.setLogin(s);
             userRepo.save(user);
         }
 
-        for(int i=0; i<2; i++) {
+        for(int i=0; i<5; i++) {
             double descriptionSize = Math.random()*418;
             StringBuilder longDesc = new StringBuilder();
             for(int y = 0; y < descriptionSize; y++) {
@@ -84,7 +88,7 @@ public class Eve {
             Event event = new Event();
             event.setLongDescription(longDesc.toString());
             double titleSize = Math.random()*30;
-            event.setTitle(longDesc.substring(0, (int) titleSize));//exception
+            event.setTitle(eventsNames.get(i).getTitle());//exception
             double shortDescriptionSize = Math.random()*30;
             StringBuilder shortDesc = new StringBuilder();
             for(int y = 0; y < shortDescriptionSize; y++) {

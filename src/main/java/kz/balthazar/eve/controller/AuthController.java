@@ -19,6 +19,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -107,9 +109,12 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String auth(@RequestBody AuthRequest request) {
+    public List auth(@RequestBody AuthRequest request) {
         User user = userService.findByLoginAndPassword(request.getLogin(), request.getPassword());
         if (user == null) throw new BadCredentialsException(Errors.invalidCreds);
-        return jwtProvider.generateToken(user.getLogin());
+        List list = new ArrayList();
+        list.add(jwtProvider.generateToken(user.getLogin()));
+        list.add(user);
+        return list;
     }
 }
