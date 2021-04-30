@@ -4,6 +4,7 @@ import kz.balthazar.eve.model.entity.Event;
 import kz.balthazar.eve.model.entity.Review;
 import kz.balthazar.eve.recommender.Recommender;
 import kz.balthazar.eve.repository.EventRepo;
+import kz.balthazar.eve.repository.ReviewRepo;
 import kz.balthazar.eve.repository.UserRepo;
 import kz.balthazar.eve.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/event")
+@CrossOrigin
 public class EventUserController {
 
     @Autowired
@@ -34,6 +36,9 @@ public class EventUserController {
 
     @Autowired
     Recommender recommender;
+
+    @Autowired
+    ReviewRepo reviewRepo;
 
     @PostMapping("/attend")
     public ResponseEntity<String> attendEvent(@RequestParam Long eventId, @RequestParam Long userId) {
@@ -78,6 +83,11 @@ public class EventUserController {
                                 .comparingByValue()));
         stream.forEach(e -> events.add(e.getKey()));
         return events;
+    }
+
+    @GetMapping("/reviews")
+    public List<Review> reviews(@RequestParam Long eventId) {
+        return reviewRepo.findByEventId(eventId);
     }
 
 }

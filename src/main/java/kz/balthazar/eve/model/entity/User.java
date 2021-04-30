@@ -41,9 +41,9 @@ public class User extends BaseEntity{
     @JoinColumn(name = "role_id")
     Role role;
 
-//    @ManyToMany
-//    List<Event> attendedEvents;
-//
+    @ManyToMany
+    List<Event> attendedEvents;
+
 //    @OneToMany
 //    List<Event> likedEvents;
 
