@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/event")
+@CrossOrigin
 public class EventAdminController {
 
     @Autowired

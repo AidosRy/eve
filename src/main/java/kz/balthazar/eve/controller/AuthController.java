@@ -25,6 +25,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+@CrossOrigin
 public class AuthController {
 
     UserService userService;
@@ -54,7 +55,7 @@ public class AuthController {
         mailMessage.setSubject("Complete Registration!");
         mailMessage.setFrom("qaidosp@gmail.com");
         mailMessage.setText("To confirm your account, please click here : "
-                +"http://localhost:9192/confirm-account?token="+confirmationToken.getConfirmationToken());
+                +"http://localhost:12/confirm-account?token="+confirmationToken.getConfirmationToken());
         emailSenderService.sendEmail(mailMessage);
         return "OK";
     }
@@ -73,7 +74,7 @@ public class AuthController {
                 mailMessage.setSubject("Change password link");
                 mailMessage.setFrom("qaidosp@gmail.com");
                 mailMessage.setText("To change password, please click here : "
-                        + "http://localhost:9192/reset_password?token=" + confirmationToken.getConfirmationToken());
+                        + "http://localhost:12/reset_password?token=" + confirmationToken.getConfirmationToken());
                 emailSenderService.sendEmail(mailMessage);
                 return "Reset link sent to email";
             }
