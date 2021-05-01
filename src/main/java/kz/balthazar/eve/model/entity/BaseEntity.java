@@ -1,6 +1,7 @@
 package kz.balthazar.eve.model.entity;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,6 +11,7 @@ import java.time.OffsetDateTime;
 
 @MappedSuperclass
 @Getter
+@Setter
 public class BaseEntity {
     @Id
     @GeneratedValue

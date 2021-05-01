@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -42,12 +43,20 @@ public class User extends BaseEntity{
     Role role;
 
     @ManyToMany
-    List<Event> attendedEvents;
+    List<Event> attendedEvents = new ArrayList<>();
 
 //    @OneToMany
 //    List<Event> likedEvents;
 
     public User(String login) {
         this.login = login;
+    }
+
+    public void addAttendedEvents(Event event) {
+        attendedEvents.add(event);
+    }
+
+    public void deleteAttendedEvent(Event event) {
+        attendedEvents.remove(event);
     }
 }

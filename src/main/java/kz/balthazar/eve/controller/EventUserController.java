@@ -2,6 +2,7 @@ package kz.balthazar.eve.controller;
 
 import kz.balthazar.eve.model.entity.Event;
 import kz.balthazar.eve.model.entity.Review;
+import kz.balthazar.eve.model.entity.User;
 import kz.balthazar.eve.recommender.Recommender;
 import kz.balthazar.eve.repository.EventRepo;
 import kz.balthazar.eve.repository.ReviewRepo;
@@ -43,8 +44,11 @@ public class EventUserController {
     @PostMapping("/attend")
     public ResponseEntity<String> attendEvent(@RequestParam Long eventId, @RequestParam Long userId) {
         Event event = eventRepo.getOne(eventId);
-        event.addAttendee(userRepo.getOne(userId));
-        eventRepo.save(event);
+        User user = userRepo.getOne(userId);
+//        event.addAttendee(user);
+//        eventRepo.save(event);
+        user.addAttendedEvents(event);
+        userRepo.save(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -56,8 +60,11 @@ public class EventUserController {
     @DeleteMapping("/unattend")
     public ResponseEntity<String> unAttendEvent(@RequestParam Long eventId, @RequestParam Long userId) {
         Event event = eventRepo.getOne(eventId);
-        event.deleteAttendee(userRepo.getOne(userId));
-        eventRepo.save(event);
+        User user = userRepo.getOne(userId);
+        user.deleteAttendedEvent(event);
+        userRepo.save(user);
+//        event.deleteAttendee();
+//        eventRepo.save(event);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

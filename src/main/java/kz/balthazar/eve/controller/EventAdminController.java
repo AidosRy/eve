@@ -16,7 +16,7 @@ public class EventAdminController {
     EventRepo eventRepo;
 
     @PostMapping
-    public String addEvent(Event event) {
+    public String addEvent(@RequestBody Event event) {
         eventRepo.save(event);
         return Response.success;
     }
@@ -28,7 +28,7 @@ public class EventAdminController {
     }
 
     @PutMapping
-    public String updateEvent(Event event) {
+    public String updateEvent(@RequestBody Event event) {
         eventRepo.save(event);
         return Response.success;
     }

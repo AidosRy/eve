@@ -1,7 +1,10 @@
 package kz.balthazar.eve.model.entity;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Required;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,7 +15,7 @@ import java.util.Set;
 
 @Entity
 @Data
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class Event extends BaseEntity{
 
     String title;
@@ -22,9 +25,9 @@ public class Event extends BaseEntity{
 
     @Column(columnDefinition="TEXT")
     String longDescription;
-
-    @ManyToMany
-    List<User> attendees = new ArrayList<>();
+//
+//    @ManyToMany
+//    List<User> attendees = new ArrayList<>();
 
     @ManyToMany
     List<Tag> tags = new ArrayList<>();
@@ -52,11 +55,11 @@ public class Event extends BaseEntity{
         this.title = title;
     }
 
-    public void addAttendee(User user) {
-        attendees.add(user);
-    }
-
-    public void deleteAttendee(User user) {
-        attendees.remove(user);
-    }
+//    public void addAttendee(User user) {
+//        attendees.add(user);
+//    }
+//
+//    public void deleteAttendee(User user) {
+//        attendees.remove(user);
+//    }
 }
