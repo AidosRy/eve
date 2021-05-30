@@ -24,7 +24,7 @@ dependencies {
 }
 
 group = 'kz.balthazar'
-version = '0.0.7.8'
+version = '0.0.7.8.9.9'
 description = 'eve'
 java.sourceCompatibility = JavaVersion.VERSION_15
 

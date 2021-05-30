@@ -22,12 +22,11 @@ import java.util.zip.Inflater;
 @CrossOrigin
 public class ImageUploadController {
 
-
     @Autowired
     ImageRepository imageRepository;
 
     @PostMapping("/upload")
-    public BodyBuilder uplaodImage(@RequestParam("imageFile") MultipartFile file) throws IOException {
+    public BodyBuilder uploadImage(@RequestPart("imageFile") MultipartFile file) throws IOException {
 
         System.out.println("Original Image Byte Size - " + file.getBytes().length);
 
@@ -42,7 +41,7 @@ public class ImageUploadController {
 
     @GetMapping(path = { "/get/{imageName}" })
 
-    public ImageModel getImage(@PathVariable("imageName") String imageName) throws IOException {
+    public ImageModel getImage(@PathVariable("imageName") String imageName) {
 
         final Optional<ImageModel> retrievedImage = imageRepository.findByName(imageName);
 

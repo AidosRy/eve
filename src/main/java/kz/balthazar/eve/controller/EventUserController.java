@@ -47,7 +47,7 @@ public class EventUserController {
         User user = userRepo.getOne(userId);
 //        event.addAttendee(user);
 //        eventRepo.save(event);
-//        user.addAttendedEvents(event);
+        user.addAttendedEvents(event);
         userRepo.save(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -61,7 +61,7 @@ public class EventUserController {
     public ResponseEntity<String> unAttendEvent(@RequestParam Long eventId, @RequestParam Long userId) {
         Event event = eventRepo.getOne(eventId);
         User user = userRepo.getOne(userId);
-//        user.deleteAttendedEvent(event);
+        user.deleteAttendedEvent(event);
         userRepo.save(user);
 //        event.deleteAttendee();
 //        eventRepo.save(event);
@@ -90,6 +90,18 @@ public class EventUserController {
                                 .comparingByValue()));
         stream.forEach(e -> events.add(e.getKey()));
         return events;
+    }
+
+    @GetMapping("/get_friends_attending_event")
+    public List<User> getFriends(@RequestParam Long eventId, @RequestParam Long userId) {
+        var attendingFriends = new ArrayList<User>();
+        var event = eventRepo.findById(eventId).get();
+        for (var user : userRepo.findById(userId).get().getFriends()) {
+            if (user.getAttendedEvents().contains(event)) {
+                attendingFriends.add(user);
+            }
+        }
+        return attendingFriends;
     }
 
     @GetMapping("/reviews")

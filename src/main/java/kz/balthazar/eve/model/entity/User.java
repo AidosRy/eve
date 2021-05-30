@@ -30,8 +30,6 @@ public class User extends BaseEntity{
 
     String telephone;
 
-    boolean showType;
-
     String firstName;
 
     String lastName;
@@ -42,8 +40,14 @@ public class User extends BaseEntity{
     @JoinColumn(name = "role_id")
     Role role;
 
-//    @ManyToMany
-//    List<Event> attendedEvents = new ArrayList<>();
+    @ManyToMany
+    List<User> friends;
+
+    @ManyToMany
+    List<ImageModel> images;
+
+    @ManyToMany
+    List<Event> attendedEvents = new ArrayList<>();
 
 //    @OneToMany
 //    List<Event> likedEvents;
@@ -52,11 +56,15 @@ public class User extends BaseEntity{
         this.login = login;
     }
 
-//    public void addAttendedEvents(Event event) {
-//        attendedEvents.add(event);
-//    }
-//
-//    public void deleteAttendedEvent(Event event) {
-//        attendedEvents.remove(event);
-//    }
+    public void addFriend(User friend) {
+        friends.add(friend);
+    }
+
+    public void addAttendedEvents(Event event) {
+        attendedEvents.add(event);
+    }
+
+    public void deleteAttendedEvent(Event event) {
+        attendedEvents.remove(event);
+    }
 }

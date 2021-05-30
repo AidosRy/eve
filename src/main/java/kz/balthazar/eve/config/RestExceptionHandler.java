@@ -21,9 +21,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleExceptions(Exception e, WebRequest request) {
-
+        e.printStackTrace();
         HttpStatus status = switch (e.getMessage()){
-            case Errors.invalidCreds -> HttpStatus.BAD_REQUEST;
+//            case Errors.invalidCreds -> HttpStatus.BAD_REQUEST;
             default -> HttpStatus.INTERNAL_SERVER_ERROR;
         };
         return new ResponseEntity<>(errorMessage(status, e, request), status);
