@@ -26,7 +26,7 @@ public class Recommender {
     private final Map<User, HashMap<Event, Double>> outputData = new HashMap<>();
 
     protected List<Event> events;
-
+//collaborative filtering, slope one algorithm
     public Map<User, HashMap<Event, Double>> start() {
         events = eventRepo.findAll();
         Map<User, HashMap<Event, Double>> inputData = initializeData();
@@ -51,7 +51,7 @@ public class Recommender {
             }
             data.put(user, newUser);
         }
-        data.put(new User("kek"), new HashMap<>());
+//        data.put(new User("kek"), new HashMap<>());
         return data;
     }
 
@@ -84,7 +84,7 @@ public class Recommender {
                 difference.get(j).put(i, oldValue / count);
             }
         }
-//        printData(data);
+        printData(data);
     }
 
     /**
@@ -128,13 +128,13 @@ public class Recommender {
             }
             outputData.put(e.getKey(), clean);
         }
-//        printData(outputData);
+        printData(outputData);
         return outputData;
     }
 
     private void printData(Map<User, HashMap<Event, Double>> data) {
         for (User user : data.keySet()) {
-            System.out.println(user.getLogin() + ":");
+//            System.out.println(user.getLogin() + ":");
             print(data.get(user));
         }
     }
@@ -142,7 +142,7 @@ public class Recommender {
     private void print(HashMap<Event, Double> hashMap) {
         NumberFormat formatter = new DecimalFormat("#0.000");
         for (Event j : hashMap.keySet()) {
-            System.out.println(" " + j.getTitle() + " --> " + formatter.format(hashMap.get(j).doubleValue()));
+//            System.out.println(" " + j.getTitle() + " --> " + formatter.format(hashMap.get(j).doubleValue()));
         }
     }
 

@@ -1,6 +1,8 @@
 package kz.balthazar.eve.model.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -8,6 +10,8 @@ import javax.persistence.OneToOne;
 
 @Data
 @Entity
+@SuperBuilder
+@NoArgsConstructor
 public class Review extends BaseEntity{
 
     @OneToOne

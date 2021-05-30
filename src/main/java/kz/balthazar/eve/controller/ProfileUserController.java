@@ -19,10 +19,10 @@ public class ProfileUserController {
     @Autowired
     EventRepo eventRepo;
 
-    @GetMapping("/my_events")
-    public List<Event> myEvents(@RequestParam Long id) {
-        return userRepo.findById(id).get().getAttendedEvents();
-    }
+//    @GetMapping("/my_events")
+//    public List<Event> myEvents(@RequestParam Long id) {
+//        return userRepo.findById(id).get().getAttendedEvents();
+//    }
 
     @GetMapping("/profile")
     public User myProfile(@RequestParam Long id) {

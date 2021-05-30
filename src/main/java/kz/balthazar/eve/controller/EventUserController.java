@@ -47,7 +47,7 @@ public class EventUserController {
         User user = userRepo.getOne(userId);
 //        event.addAttendee(user);
 //        eventRepo.save(event);
-        user.addAttendedEvents(event);
+//        user.addAttendedEvents(event);
         userRepo.save(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -61,7 +61,7 @@ public class EventUserController {
     public ResponseEntity<String> unAttendEvent(@RequestParam Long eventId, @RequestParam Long userId) {
         Event event = eventRepo.getOne(eventId);
         User user = userRepo.getOne(userId);
-        user.deleteAttendedEvent(event);
+//        user.deleteAttendedEvent(event);
         userRepo.save(user);
 //        event.deleteAttendee();
 //        eventRepo.save(event);

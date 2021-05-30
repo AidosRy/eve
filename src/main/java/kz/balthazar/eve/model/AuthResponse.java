@@ -9,3 +9,4 @@ public class AuthResponse {
 
     String token;
 }
+

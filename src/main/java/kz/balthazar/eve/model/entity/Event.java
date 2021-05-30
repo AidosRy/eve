@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.springframework.beans.factory.annotation.Required;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ import java.util.Set;
 @Entity
 @Data
 @RequiredArgsConstructor
+@SuperBuilder
 public class Event extends BaseEntity{
 
     String title;
@@ -25,12 +27,6 @@ public class Event extends BaseEntity{
 
     @Column(columnDefinition="TEXT")
     String longDescription;
-//
-//    @ManyToMany
-//    List<User> attendees = new ArrayList<>();
-
-    @ManyToMany
-    List<Tag> tags = new ArrayList<>();
 
     @Lob
     byte[] thumbnail;
@@ -45,21 +41,8 @@ public class Event extends BaseEntity{
 
     Integer price;
 
-    @ManyToOne
-    User author;
-
-    @ManyToMany
-    List<Category> categories = new ArrayList<>();
-
     public Event(String title) {
         this.title = title;
     }
 
-//    public void addAttendee(User user) {
-//        attendees.add(user);
-//    }
-//
-//    public void deleteAttendee(User user) {
-//        attendees.remove(user);
-//    }
 }

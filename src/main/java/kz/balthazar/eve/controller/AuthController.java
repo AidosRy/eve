@@ -45,6 +45,7 @@ public class AuthController {
         String login = user.getLogin();
         if(userService.findByLogin(login) != null)
             throw new RuntimeException("Login already exists");
+//        user.setEnabled(false);
         userService.saveUser(user);
         ConfirmationToken confirmationToken = new ConfirmationToken(user);
 
@@ -53,9 +54,9 @@ public class AuthController {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(user.getEmail());
         mailMessage.setSubject("Complete Registration!");
-        mailMessage.setFrom("qaidosp@gmail.com");
+        mailMessage.setFrom("eve_support@gmail.com");
         mailMessage.setText("To confirm your account, please click here : "
-                +"http://localhost:12/confirm-account?token="+confirmationToken.getConfirmationToken());
+                +"http://localhost:9192/confirm-account?token="+confirmationToken.getConfirmationToken());
         emailSenderService.sendEmail(mailMessage);
         return "OK";
     }
@@ -72,9 +73,9 @@ public class AuthController {
                 SimpleMailMessage mailMessage = new SimpleMailMessage();
                 mailMessage.setTo(email);
                 mailMessage.setSubject("Change password link");
-                mailMessage.setFrom("qaidosp@gmail.com");
+                mailMessage.setFrom("eve_support@gmail.com");
                 mailMessage.setText("To change password, please click here : "
-                        + "http://localhost:12/reset_password?token=" + confirmationToken.getConfirmationToken());
+                        + "http://localhost:9192/reset_password?token=" + confirmationToken.getConfirmationToken());
                 emailSenderService.sendEmail(mailMessage);
                 return "Reset link sent to email";
             }
@@ -113,6 +114,7 @@ public class AuthController {
     public List auth(@RequestBody AuthRequest request) {
         User user = userService.findByLoginAndPassword(request.getLogin(), request.getPassword());
         if (user == null) throw new BadCredentialsException(Errors.invalidCreds);
+        if (!user.isEnabled()) throw new RuntimeException(Errors.confirmAccount);
         List list = new ArrayList();
         list.add(jwtProvider.generateToken(user.getLogin()));
         list.add(user);

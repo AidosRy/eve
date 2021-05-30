@@ -1,17 +1,18 @@
 package kz.balthazar.eve.model.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.time.OffsetDateTime;
 
 @MappedSuperclass
 @Getter
 @Setter
+@NoArgsConstructor
+@SuperBuilder
 public class BaseEntity {
     @Id
     @GeneratedValue
@@ -19,17 +20,16 @@ public class BaseEntity {
 
     OffsetDateTime createdDate;
 
-    @OneToOne
+    @ManyToOne
     User createdUser;
 
     OffsetDateTime updatedDate;
 
-    @OneToOne
+    @ManyToOne
     User updatedUser;
 
     OffsetDateTime deletedDate;
 
-    @OneToOne
+    @ManyToOne
     User deletedUser;
-
 }

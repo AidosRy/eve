@@ -3,6 +3,8 @@ package kz.balthazar.eve.model.dto;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Required;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,7 +29,7 @@ public class EventDto {
 
     Integer price;
 
-    Integer authorId;
+    Long authorId;
 
     List<String> tags;
 

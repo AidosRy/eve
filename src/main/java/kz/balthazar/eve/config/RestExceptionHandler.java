@@ -19,15 +19,6 @@ import java.util.Arrays;
 @Slf4j
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
-    /*
-{
-"timestamp": "2021-03-30T15:39:22.870+00:00",
-"status": 500,
-"error": "Internal Server Error",
-"message": "",
-"path": "/test"
-}
- */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleExceptions(Exception e, WebRequest request) {
 
@@ -53,3 +44,14 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 .build();
     }
 }
+
+
+/*
+{
+"timestamp": "2021-03-30T15:39:22.870+00:00",
+"status": 500,
+"error": "Internal Server Error",
+"message": "",
+"path": "/test"
+}
+ */

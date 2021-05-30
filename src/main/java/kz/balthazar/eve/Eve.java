@@ -65,9 +65,9 @@ public class Eve {
         user.setEnabled(true);
         user.setRole(adminRole);
 
-        user.setLogin("asdasd");
+        user.setLogin("user111");
         userRepo.save(user);
-        String s = "s";
+        String s = "user";
         List<Event> eventsNames = Arrays.asList(new Event("Party"), new Event("Toy"), new Event("Concert"), new Event("Commencement"), new Event("Hackaton"));
         for(int i=0; i<3; i++) {
             user = new User();
@@ -77,8 +77,7 @@ public class Eve {
             user.setPassword(passwordEncoder.encode("asdasd"));
             user.setEnabled(true);
             user.setRole(adminRole);
-            s+=s;
-            user.setLogin(s);
+            user.setLogin(s+i);
             userRepo.save(user);
         }
 
@@ -107,7 +106,7 @@ public class Eve {
             };
             event.setDate(LocalDateTime.now().plusDays(days));
             event.setLocation("Almaty");
-            event.setAuthor(user);
+//            event.setAuthor(user);
             event.setRating(Math.random() * 5);
             event.setViews((int) (Math.random() * 20000));
             eventRepo.save(event);
@@ -132,7 +131,7 @@ public class Eve {
         event.setShortDescription(shortDesc.toString());
         event.setDate(LocalDateTime.now().plusHours(7));
         event.setLocation("Almaty");
-        event.setAuthor(user);
+//        event.setAuthor(user);
         event.setRating(Math.random() * 5);
         event.setViews((int) (Math.random() * 20000));
         eventRepo.save(event);

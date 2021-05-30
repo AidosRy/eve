@@ -4,7 +4,6 @@ import kz.balthazar.eve.model.entity.Event;
 import kz.balthazar.eve.repository.EventRepo;
 import kz.balthazar.eve.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,18 +17,18 @@ public class EventAdminController {
     @PostMapping
     public String addEvent(@RequestBody Event event) {
         eventRepo.save(event);
-        return Response.success;
+        return Response.ok;
     }
 
     @DeleteMapping
     public String deleteEvent(Long id) {
         eventRepo.deleteById(id);
-        return Response.success;
+        return Response.ok;
     }
 
     @PutMapping
     public String updateEvent(@RequestBody Event event) {
         eventRepo.save(event);
-        return Response.success;
+        return Response.ok;
     }
 }
