@@ -28,9 +28,6 @@ public class Event extends BaseEntity{
     @Column(columnDefinition="TEXT")
     String longDescription;
 
-    @Lob
-    byte[] thumbnail;
-
     Double rating;
 
     Integer views;
@@ -40,6 +37,8 @@ public class Event extends BaseEntity{
     String location;
 
     Integer price;
+
+    String imageName;
 
     public Event(String title) {
         this.title = title;

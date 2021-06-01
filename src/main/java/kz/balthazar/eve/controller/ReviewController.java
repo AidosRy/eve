@@ -1,8 +1,11 @@
 package kz.balthazar.eve.controller;
 
+import kz.balthazar.eve.model.dto.EventDto;
+import kz.balthazar.eve.model.dto.ReviewDto;
 import kz.balthazar.eve.model.entity.Review;
 import kz.balthazar.eve.repository.EventRepo;
 import kz.balthazar.eve.repository.ReviewRepo;
+import kz.balthazar.eve.repository.UserRepo;
 import kz.balthazar.eve.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,14 +26,22 @@ public class ReviewController {
     @Autowired
     EventRepo eventRepo;
 
+    @Autowired
+    UserRepo userRepo;
+
     @GetMapping
     public List<Review> getReview(@RequestParam Long eventId) {
         return reviewRepo.findByEventId(eventId);
     }
 
     @PostMapping
-    public String publishReview(@RequestParam Long eventId) {
-        reviewRepo.save(Review.builder().event(eventRepo.getOne(eventId)).build());
+    public String publishReview(ReviewDto dto) {
+        reviewRepo.save(Review.builder()
+                .event(eventRepo.getOne(dto.getEventId()))
+                .text(dto.getText())
+                .rating(dto.getRating())
+                .user(userRepo.getOne(dto.getUserId()))
+                .build());
         return Response.ok;
     }
 }

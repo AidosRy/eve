@@ -56,7 +56,7 @@ public class AuthController {
         mailMessage.setSubject("Complete Registration!");
         mailMessage.setFrom("eve_support@gmail.com");
         mailMessage.setText("To confirm your account, please click here : "
-                +"http://localhost:9192/confirm-account?token="+confirmationToken.getConfirmationToken());
+                +"http://localhost:8080/confirm-account?token="+confirmationToken.getConfirmationToken());
         emailSenderService.sendEmail(mailMessage);
         return "OK";
     }
