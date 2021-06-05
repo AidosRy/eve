@@ -37,6 +37,7 @@ public class ReviewController {
     @PostMapping
     public String publishReview(ReviewDto dto) {
         reviewRepo.save(Review.builder()
+                .id(dto.getId())
                 .event(eventRepo.getOne(dto.getEventId()))
                 .text(dto.getText())
                 .rating(dto.getRating())
