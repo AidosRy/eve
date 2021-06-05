@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,12 +35,12 @@ public class UserController {
     }
 
     @GetMapping("/friends")
-    public List<User> getFriends(Long userId) {
+    public List<User> getFriends(@RequestParam Long userId) {
         return userRepo.findById(userId).get().getFriends();
     }
 
     @PostMapping("/add_friend")
-    public String addFriend(Long userId, Long friendId) {
+    public String addFriend(@RequestParam Long userId, @RequestParam Long friendId) {
         userRepo.findById(userId).get().addFriend(userRepo.getOne(friendId));
         return Response.ok;
     }

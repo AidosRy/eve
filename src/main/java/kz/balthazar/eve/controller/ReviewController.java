@@ -10,6 +10,7 @@ import kz.balthazar.eve.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,9 +36,8 @@ public class ReviewController {
     }
 
     @PostMapping
-    public String publishReview(ReviewDto dto) {
+    public String publishReview(@RequestBody ReviewDto dto) {
         reviewRepo.save(Review.builder()
-                .id(dto.getId())
                 .event(eventRepo.getOne(dto.getEventId()))
                 .text(dto.getText())
                 .rating(dto.getRating())
