@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
@@ -14,14 +15,14 @@ import javax.persistence.OneToOne;
 @NoArgsConstructor
 public class Review extends BaseEntity{
 
-    @OneToOne
+    @ManyToOne
     User user;
 
     String text;
 
     double rating;
 
-    @OneToOne
+    @ManyToOne
     Event event;
 
 }

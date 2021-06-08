@@ -28,7 +28,7 @@ public class Event extends BaseEntity{
     @Column(columnDefinition="TEXT")
     String longDescription;
 
-    Double rating;
+    Double rating = 0.0;
 
     Integer views;
 
@@ -37,6 +37,8 @@ public class Event extends BaseEntity{
     String location;
 
     Integer price;
+
+    Integer reviewsAmount = 0;
 
     String imageName;
 

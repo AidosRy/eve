@@ -36,6 +36,8 @@ public class User extends BaseEntity{
 
     boolean isEnabled;
 
+    String imageName;
+
     @ManyToOne
     @JoinColumn(name = "role_id")
     Role role;

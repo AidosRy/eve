@@ -41,7 +41,9 @@ public class UserController {
 
     @PostMapping("/add_friend")
     public String addFriend(@RequestParam Long userId, @RequestParam Long friendId) {
-        userRepo.findById(userId).get().addFriend(userRepo.getOne(friendId));
+        var user = userRepo.findById(userId).get();
+        user.addFriend(userRepo.getOne(friendId));
+        userRepo.save(user);
         return Response.ok;
     }
 }

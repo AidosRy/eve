@@ -37,12 +37,26 @@ public class ReviewController {
 
     @PostMapping
     public String publishReview(@RequestBody ReviewDto dto) {
+        var event = eventRepo.findById(dto.getEventId()).get();
+
         reviewRepo.save(Review.builder()
-                .event(eventRepo.getOne(dto.getEventId()))
+                .event(event)
                 .text(dto.getText())
                 .rating(dto.getRating())
                 .user(userRepo.getOne(dto.getUserId()))
                 .build());
+
+        var reviewsAmount = event.getReviewsAmount();
+        var eventRating = event.getRating();
+        event.setReviewsAmount(reviewsAmount++);
+        if (reviewsAmount == 1) {
+            event.setRating(dto.getRating());
+        }
+        else {
+            var calculatedRating = (eventRating + dto.getRating()) / reviewsAmount;
+            event.setRating(calculatedRating);
+        }
+        eventRepo.save(event);
         return Response.ok;
     }
 }
